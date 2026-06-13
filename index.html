@@ -5,9 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Roteiro Bariloche</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- Biblioteca html2pdf -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
 <style>
   :root {
-    /* Paleta de Cores e Variáveis base */
     --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
     --color-text-primary: #1e293b;
     --color-text-secondary: #64748b;
@@ -47,7 +49,6 @@
     padding: 20px 10px;
   }
 
-  /* Container simulando um App */
   .app-container {
     max-width: 600px;
     width: 100%;
@@ -57,14 +58,20 @@
     overflow: hidden;
   }
 
-  /* Header com gradiente de inverno */
   .header { 
     padding: 2rem 1.5rem 1.5rem; 
     background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
     border-bottom: 1px solid var(--color-border-tertiary); 
+    position: relative;
   }
   @media (prefers-color-scheme: dark) {
     .header { background: linear-gradient(135deg, #0c4a6e 0%, #082f49 100%); }
+  }
+
+  .header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
   }
 
   .header h1 { font-size: 22px; font-weight: 700; color: #0f172a; letter-spacing: -0.5px; }
@@ -72,6 +79,26 @@
   
   .header p { font-size: 14px; color: #475569; margin-top: 6px; font-weight: 500; }
   @media (prefers-color-scheme: dark) { .header p { color: #94a3b8; } }
+
+  /* Estilo do botão de PDF */
+  .btn-pdf {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background-color: #0284c7;
+    color: #ffffff;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+    font-family: var(--font-sans);
+  }
+  .btn-pdf:hover { background-color: #0369a1; }
+  .btn-pdf:active { transform: scale(0.96); }
+  .btn-pdf svg { width: 16px; height: 16px; fill: currentColor; }
 
   .legend { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 16px; }
   .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--color-text-secondary); }
@@ -150,10 +177,9 @@
   
   .sc { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 16px; border: 1px solid var(--color-border-tertiary); text-align: center; }
   .sc-label { font-size: 12px; font-weight: 600; color: var(--color-text-secondary); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;}
-  .sc-val { font-size: 20px; font-weight: 700; color: #0284c7; }
-  .sc-sub { font-size: 12px; color: var(--color-text-secondary); margin-top: 6px; }
+  .sc-val { font-size: 18px; font-weight: 700; color: #0284c7; }
+  .sc-sub { font-size: 12px; color: var(--color-text-secondary); margin-top: 6px; line-height: 1.3;}
 
-  /* Cores das Categorias */
   .cat-ski { background: #dbeafe; color: #1e3a8a; } .cat-ski-num { background: #3b82f6; color: #fff; }
   .cat-tour { background: #d1fae5; color: #065f46; } .cat-tour-num { background: #10b981; color: #fff; }
   .cat-free { background: #fef3c7; color: #92400e; } .cat-free-num { background: #f59e0b; color: #fff; }
@@ -171,10 +197,19 @@
 </head>
 <body>
 
-<div class="app-container">
+<div class="app-container" id="content-to-pdf">
   <div class="header">
-    <h1>🏔️ Bariloche — Roteiro de inverno</h1>
-    <p>16 a 25 de julho · 7 pessoas · Alta temporada</p>
+    <div class="header-top">
+      <div>
+        <h1>🏔️ Bariloche — Roteiro de inverno</h1>
+        <p>16 a 25 de julho · 7 pessoas</p>
+      </div>
+      <!-- O atributo data-html2canvas-ignore="true" esconde o botão no PDF final -->
+      <!-- <button class="btn-pdf" id="btn-export-pdf" data-html2canvas-ignore="true">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+        PDF
+      </button> -->
+    </div>
     <div class="legend">
       <div class="legend-item"><div class="legend-dot" style="background:#3b82f6"></div>Ski</div>
       <div class="legend-item"><div class="legend-dot" style="background:#10b981"></div>Tour</div>
@@ -186,6 +221,21 @@
 
   <div class="days" id="days-container"></div>
 
+  <!-- Nova Seção: Gastronomia e Alimentação -->
+  <h2 class="section-title">Gastronomia e Alimentação</h2>
+  <div class="transfer-section">
+    <div class="transfer-card">
+      <h3>🍽️ Estimativa de Gastos Diários (por pessoa)</h3>
+      <div class="transfer-grid">
+        <div class="tc"><div class="tc-label">Café / Lanches (Empanadas)</div><div class="tc-val">~R$ 40 a R$ 70</div></div>
+        <div class="tc"><div class="tc-label">Almoço (Catedral/Restaurantes)</div><div class="tc-val">~R$ 100 a R$ 180</div></div>
+        <div class="tc"><div class="tc-label">Jantar (Fondue, Parrilla, Vinho)</div><div class="tc-val">~R$ 150 a R$ 250+</div></div>
+        <div class="tc"><div class="tc-label">Média Diária Total</div><div class="tc-val" style="color: #0284c7;">~R$ 350</div></div>
+      </div>
+      <div class="tip-box" style="margin-top:16px">💡 <strong>Dica de Ouro:</strong> Restaurantes famosos (como <em>El Boliche de Alberto</em> para carnes, <em>Familia Weiss</em> ou casas de fondue) costumam ter filas na alta temporada. Tente fazer reserva ou chegar cedo. E aproveite os supermercados: alfajores e bons vinhos argentinos são muito baratos!</div>
+    </div>
+  </div>
+
   <h2 class="section-title">Logística e Transportes</h2>
   <div class="transfer-section">
     <div class="transfer-card">
@@ -196,16 +246,30 @@
         <div class="tc"><div class="tc-label">Centro → Cerro Catedral</div><div class="tc-val">~R$ 1.355</div></div>
         <div class="tc"><div class="tc-label">Porto Pañuelo (Isla Victoria)</div><div class="tc-val">~R$ 112/pessoa</div></div>
       </div>
-      <div class="tip-box" style="margin-top:16px">💡 <strong>Dica:</strong> Para os dias de ski no Cerro Catedral, considere contratar transfer privativo direto do hotel. O Cerro Otto oferece ônibus gratuito saindo do centro (esquina Mitre com Villegas) das 10h às 16h — economiza nesse dia.</div>
+      <div class="tip-box" style="margin-top:16px">💡 <strong>Dica:</strong> Para os dias de ski no Cerro Catedral, considere contratar transfer privativo direto do hotel. O Cerro Otto oferece ônibus gratuito saindo do centro (esquina Mitre com Villegas) das 10h às 16h.</div>
     </div>
   </div>
 
-  <h2 class="section-title">Resumo Financeiro</h2>
+  <!-- Resumo Financeiro Melhorado -->
+  <h2 class="section-title">Resumo Financeiro Consolidado</h2>
   <div class="summary-section">
+    
+    <!-- Quadro Detalhado -->
+    <div class="cost-box" style="margin-top: 0; background: var(--color-background-primary); margin-bottom: 16px;">
+       <div class="cost-title">Previsão de Gastos no Destino (10 dias)</div>
+       <div class="cost-row"><span>🎟️ Passeios, Ski Pass e Experiências</span><span>~R$ 2.600</span></div>
+       <div class="cost-row"><span>⛷️ Aluguel de Roupas e Equipamentos</span><span>~R$ 600</span></div>
+       <div class="cost-row"><span>🚐 Transfers (divisão grupo) e Locomoção</span><span>~R$ 500</span></div>
+       <div class="cost-row"><span>🍽️ Alimentação (~R$ 350 diários x 10 dias)</span><span>~R$ 3.500</span></div>
+       <div class="cost-total"><span>Total Estimado (por pessoa)</span><span style="color: #0284c7;">~R$ 7.200</span></div>
+       <div class="sc-sub" style="text-align: right; margin-top: 4px;">*Não inclui passagens aéreas e hospedagem.</div>
+    </div>
+
+    <!-- Dicas de Câmbio -->
     <div class="summary-grid">
-      <div class="sc"><div class="sc-label">Estimativa Média</div><div class="sc-val">R$ 2.600</div><div class="sc-sub">por pessoa (passeios/transfers)</div></div>
-      <div class="sc"><div class="sc-label">Ski pass (2 dias)</div><div class="sc-val">~USD 200</div><div class="sc-sub">por pessoa</div></div>
-      <div class="sc"><div class="sc-label">Período</div><div class="sc-val">Jul 16–25</div><div class="sc-sub">Alta temporada, reserve antes</div></div>
+      <div class="sc"><div class="sc-label">Câmbio em Espécie</div><div class="sc-val">Western Union</div><div class="sc-sub">Envie dinheiro pelo app e retire em pesos lá. Cotação "Blue".</div></div>
+      <div class="sc"><div class="sc-label">Cartão de Débito</div><div class="sc-val">Nomad / Wise</div><div class="sc-sub">Ótimo para compras do dia a dia (cotação Dólar MEP).</div></div>
+      <div class="sc"><div class="sc-label">Levar do Brasil</div><div class="sc-val">Dólares Novos</div><div class="sc-sub">Notas com "cara grande" têm cotação melhor nas casas de câmbio.</div></div>
     </div>
   </div>
 </div>
@@ -218,7 +282,7 @@ const days = [
     items: [
       { time: "Manhã/Tarde", desc: "Desembarque no Aeroporto Teniente Luis Candelaria (BRC). Transfer privativo minivan para o hotel no centro.", tip: "O aeroporto fica a ~13,5 km do centro, trajeto de 20–30 min." },
       { time: "Tarde", desc: "Check-in no hotel. Descanse e se acomode. Explore o calçadão central (Rua Mitre) a pé.", tip: null },
-      { time: "Tarde/Noite", desc: "Visite as agências de receptivo para fechar os passeios dos próximos dias. As agências funcionam até as 21h. Recomendadas: Vivir Viajes (Mitre 131) e Si Turismo (Villegas 222).", tip: "Pergunte desconto para pagamento em dinheiro e para fechar vários passeios juntos." },
+      { time: "Tarde/Noite", desc: "Visite as agências de receptivo para fechar os passeios dos próximos dias. As agências funcionam até as 21h.", tip: "Pergunte desconto para pagamento em dinheiro e para fechar vários passeios juntos." },
       { time: "Noite", desc: "Jantar de boas-vindas no centro. Experimente a Cervecería Blest ou restaurantes da Av. Bustillo.", tip: null },
     ],
     costs: [
@@ -235,7 +299,7 @@ const days = [
       { time: "Manhã", desc: "Aluguel de roupa de neve: conjunto de calça, jaqueta impermeável, luvas e botas (para os dias de ski). Diversas lojas no centro.", tip: "Você já deve trazer na mala: gorro, cachecol, segunda pele térmica e meias térmicas." },
       { time: "Manhã", desc: "Compras de chocolates artesanais na Rua Mitre. Lojas imperdíveis: Mamuschka, Del Turista, Rapa Nui.", tip: null },
       { time: "Tarde", desc: "Explore o Museu da Patagônia no Centro Cívico (entrada gratuita) e a Catedral de Bariloche.", tip: null },
-      { time: "Tarde/Noite", desc: "Experiência opcional: Noche Nórdica no Cerro Otto — passeio noturno de moto de neve + jantar gourmet em refúgio de montanha a 1.300m de altitude. Inclui fondue de queijo, empanadas patagônicas, vinho e sobremesa.", tip: "Saída ~21h, retorno ~00h. Reserve com antecedência! Capacidade limitada. Preço: ~R$ 800–1.100 por pessoa." },
+      { time: "Tarde/Noite", desc: "Experiência opcional: Noche Nórdica no Cerro Otto — passeio noturno de moto de neve + jantar gourmet em refúgio de montanha.", tip: "Saída ~21h, retorno ~00h. Reserve com antecedência! Capacidade limitada. Preço: ~R$ 800–1.100 por pessoa." },
     ],
     costs: [
       { label: "Aluguel de roupa neve (por pessoa/dia)", val: "~USD 15–25" },
@@ -250,8 +314,8 @@ const days = [
     title: "Ski — Cerro Catedral",
     items: [
       { time: "Cedo (8h)", desc: "Café da manhã e saída para o Cerro Catedral (a 19 km do centro). Transfer privativo recomendado para o grupo.", tip: "Chegue cedo para pegar boas pistas e evitar filas nos elevadores." },
-      { time: "9h–16h", desc: "Ski e snowboard livre. O Cerro Catedral é o maior complexo de ski do hemisfério sul: +1.200 ha, 25 meios de elevação, pistas para todos os níveis.", tip: null },
-      { time: "Qualquer hora", desc: "Para quem não vai esquiar: Cable Carril para um refúgio com vista panorâmica incrível. Almoço em El Chúcaro ou outra cafeteria na base/cume.", tip: "Tome um chocolate quente com vista para as pistas — experiência imperdível!" },
+      { time: "9h–16h", desc: "Ski e snowboard livre. O Cerro Catedral é o maior complexo de ski do hemisfério sul.", tip: null },
+      { time: "Qualquer hora", desc: "Para quem não vai esquiar: Cable Carril para um refúgio com vista panorâmica incrível.", tip: "Tome um chocolate quente com vista para as pistas — experiência imperdível!" },
       { time: "16h–17h", desc: "Retorno ao hotel. Tempo livre para recuperação.", tip: null },
     ],
     costs: [
@@ -269,7 +333,7 @@ const days = [
     title: "Ski — Cerro Catedral (2º dia)",
     items: [
       { time: "Cedo (8h)", desc: "Repita o roteiro do dia 3 com mais confiança nas pistas. Quem pegou aula no dia anterior já pode tentar pistas mais desafiadoras.", tip: null },
-      { time: "9h–16h", desc: "Ski e snowboard. Explore setores diferentes do dia anterior: Sectores Nubes, Lynch, Nido de Cóndores.", tip: "Sábado pode ser mais movimentado — chegue ainda mais cedo." },
+      { time: "9h–16h", desc: "Ski e snowboard. Explore setores diferentes do dia anterior.", tip: "Sábado pode ser mais movimentado — chegue ainda mais cedo." },
       { time: "Almoço", desc: "Almoce no complexo do Cerro Catedral — há várias opções de preços e estilos.", tip: null },
     ],
     costs: [
@@ -279,17 +343,17 @@ const days = [
     ],
     total: "~USD 140 p/ pessoa + R$ 2.710 transfer",
     tip: "Alternativa: se o grupo já está satisfeito com ski, troque este 2º dia pelo Tour Cerro Tronador.",
-    alt: "<strong>Sugestão para quem não vai esquiar:</strong> Tour Cerro Tronador — viagem full-day até o vulcão extinto com geleira Ventisquero Negro. Uma das paisagens mais dramáticas de toda a Patagônia. ~R$ 200–280/pessoa com transfer."
+    alt: "<strong>Sugestão para quem não vai esquiar:</strong> Tour Cerro Tronador — viagem full-day até o vulcão extinto com geleira Ventisquero Negro."
   },
   {
     num: 5, date: "20/07 · Domingo", cat: "tour", catLabel: "Tour",
     title: "Tour Circuito Chico",
     items: [
-      { time: "9h–13h", desc: "Saída em van para o Circuito Chico (65 km, ~4 horas). Percurso pela Av. Bustillo margeando o Lago Nahuel Huapi. Paradas em: Playa Bonita, mirante Bahía López, base do Cerro Campanario.", tip: null },
-      { time: "Cerro Campanario", desc: "Subida de aerosilla (opcional) ao cume a 1.050m — considerada uma das 10 vistas mais belas do mundo: panorama 360° dos lagos, montanhas e florestas.", tip: "Ingresso da aerosilla não incluso no tour (~USD 15/pessoa). Vale muito!" },
-      { time: "Tarde", desc: "Continuação do circuito: Hotel Llao Llao, Capela San Eduardo, Porto Pañuelo, Villa Tacul, Lago Escondido e Ponte Angostura.", tip: null },
+      { time: "9h–13h", desc: "Saída em van para o Circuito Chico (65 km, ~4 horas). Percurso pela Av. Bustillo margeando o Lago Nahuel Huapi.", tip: null },
+      { time: "Cerro Campanario", desc: "Subida de aerosilla (opcional) ao cume a 1.050m — considerada uma das 10 vistas mais belas do mundo.", tip: "Ingresso da aerosilla não incluso no tour (~USD 15/pessoa). Vale muito!" },
+      { time: "Tarde", desc: "Continuação do circuito: Hotel Llao Llao, Capela San Eduardo, Porto Pañuelo, Villa Tacul e Lago Escondido.", tip: null },
       { time: "13h–14h", desc: "Retorno ao centro. Tarde livre para compras ou descanso.", tip: null },
-      { time: "Tarde/Noite", desc: "Aproveite para almoçar ou jantar na Cervecería Patagonia (no próprio Circuito Chico, km 24), com vista panorâmica para o Lago Moreno.", tip: "A Patagonia oferece tour da fábrica de ~1h30 com 4 degustações." },
+      { time: "Tarde/Noite", desc: "Aproveite para almoçar ou jantar na Cervecería Patagonia.", tip: "A Patagonia oferece tour da fábrica de ~1h30 com 4 degustações." },
     ],
     costs: [
       { label: "Tour Circuito Chico (por pessoa)", val: "~R$ 120–200" },
@@ -304,10 +368,9 @@ const days = [
     title: "Isla Victoria + Bosque de Arrayanes",
     items: [
       { time: "9h–9h30", desc: "Transfer do hotel até Porto Pañuelo (no Llao Llao, ~30 min). Embarque no catamarã.", tip: "Leve dinheiro em pesos argentinos para pagar taxa portuária (~USD 2) e ingresso do Parque Nacional Nahuel Huapi (~USD 6)." },
-      { time: "10h–11h", desc: "Navegação pelo Lago Nahuel Huapi até a Ilha Victoria. Trilhas na ilha passando por floresta nativa de coníferas.", tip: null },
-      { time: "11h–13h", desc: "Navegação até a Península Quetrihué: Bosque de Arrayanes — único no mundo onde o arrayán cresce na forma de árvore de até 20m de altura.", tip: "A floresta inspirou Walt Disney na criação do Bambi! Temperatura dentro do bosque cai ~10°C em relação à externa." },
+      { time: "10h–11h", desc: "Navegação pelo Lago Nahuel Huapi até a Ilha Victoria. Trilhas na ilha passando por floresta nativa.", tip: null },
+      { time: "11h–13h", desc: "Navegação até a Península Quetrihué: Bosque de Arrayanes.", tip: "A floresta inspirou Walt Disney na criação do Bambi!" },
       { time: "13h–14h30", desc: "Retorno de barco a Porto Pañuelo. Transfer de volta ao hotel.", tip: null },
-      { time: "Tarde", desc: "Tarde livre. Boa oportunidade para experiências gastronômicas ou compras de lembranças.", tip: null },
     ],
     costs: [
       { label: "Passeio de barco Isla Victoria (por pessoa)", val: "~R$ 250–350" },
@@ -315,7 +378,7 @@ const days = [
       { label: "Transfer hotel → Porto Pañuelo (grupo)", val: "~R$ 784" },
     ],
     total: "~R$ 450–550 por pessoa",
-    tip: "Recomendado: faça o passeio de manhã (saída às 12h ou 14h dependendo da empresa) para ter melhor luz e mais tempo na ilha.",
+    tip: "Recomendado: faça o passeio de manhã para ter melhor luz e mais tempo na ilha.",
     alt: "<strong>Alternativa:</strong> Este passeio é altamente recomendado — mantenha! Se quiser trocar, substitua por Puerto Blest."
   },
   {
@@ -323,25 +386,24 @@ const days = [
     title: "Tour de cervejarias + Day Free",
     items: [
       { time: "Manhã", desc: "Manhã livre — ideal para trilha leve, SPA no hotel ou mais compras no centro.", tip: null },
-      { time: "15h–21h30", desc: "Beer Tour Bariloche: tour guiado por 3 cervejarias artesanais com degustações, harmonizações e jantar. Inclui transporte.", tip: "Paradas típicas: Wesley Brewery, Cervecería Patagonia, Fábrica Gilbert." },
+      { time: "15h–21h30", desc: "Beer Tour Bariloche: tour guiado por 3 cervejarias artesanais com degustações, harmonizações e jantar.", tip: "Paradas típicas: Wesley Brewery, Cervecería Patagonia, Fábrica Gilbert." },
       { time: "Noite", desc: "Retorno ao hotel após o jantar na última cervejaria (~21h30).", tip: null },
     ],
     costs: [
       { label: "Beer Tour (por pessoa, com jantar)", val: "~R$ 350–500" },
     ],
     total: "~R$ 350–500 por pessoa",
-    tip: "Cervejarias para visitar por conta: Blest (pioneira, ícone de Bariloche), Manush (centro, boa comida), Patagonia (vista incrível).",
+    tip: "Cervejarias para visitar por conta: Blest (pioneira), Manush (centro), Patagonia (vista incrível).",
     alt: "<strong>Variação:</strong> Se o grupo preferir um dia totalmente livre, reserve as cervejarias para uma saída noturna espontânea."
   },
   {
     num: 8, date: "23/07 · Quarta", cat: "tour", catLabel: "Tour",
     title: "Tour Cerro Otto",
     items: [
-      { time: "10h", desc: "Ônibus gratuito do Cerro Otto saindo da esquina de Mitre com Villegas, no centro. Trajeto de ~15 min até a base.", tip: "Funciona de seg a sáb, das 10h às 16h. No domingo, verifique operação." },
-      { time: "10h30", desc: "Compra de ingresso na base e subida de teleférico (gôndolas para 4 pessoas) até o cume a 1.405m, em 12 minutos. Vista panorâmica espetacular.", tip: "Chegue cedo para evitar fila." },
-      { time: "11h–14h", desc: "No cume: pistas de trenó, caminhada com raquetes de neve, funicular da cume, labirinto, galeria de esculturas e a famosa Confeitaria Giratória.", tip: "A confeitaria gira 360° em ~20 min. Experimente o chocolate quente!" },
+      { time: "10h", desc: "Ônibus gratuito do Cerro Otto saindo da esquina de Mitre com Villegas, no centro.", tip: "Funciona de seg a sáb, das 10h às 16h. No domingo, verifique operação." },
+      { time: "10h30", desc: "Compra de ingresso na base e subida de teleférico até o cume a 1.405m.", tip: "Chegue cedo para evitar fila." },
+      { time: "11h–14h", desc: "No cume: pistas de trenó, caminhada com raquetes de neve e a famosa Confeitaria Giratória.", tip: "A confeitaria gira 360° em ~20 min. Experimente o chocolate quente!" },
       { time: "14h–15h", desc: "Descida de teleférico e ônibus de retorno ao centro.", tip: null },
-      { time: "Tarde/Noite", desc: "Tarde livre. Última oportunidade para compras finas: chocolates Mamuschka, licores artesanais, artesanatos.", tip: null },
     ],
     costs: [
       { label: "Ingresso teleférico Cerro Otto (por pessoa)", val: "~USD 25–40" },
@@ -356,8 +418,8 @@ const days = [
     title: "Day Free + Experiência Especial",
     items: [
       { time: "Manhã", desc: "Manhã totalmente livre — aproveite para relaxar, fazer trilha leve, ou revisitar pontos que mais gostaram.", tip: null },
-      { time: "Tarde", desc: "Sugestão de experiência: Passeio de moto de neve no Cerro Otto ou Cerro Catedral. Duração ~30–40 min.", tip: null },
-      { time: "Noite", desc: "Jantar de confraternização — escolha um bom restaurante para encerrar com chave de ouro. Sugestão: Kandahar (restaurante histórico de Bariloche).", tip: "Alternativa de experiência noturna: Refugio en Arelauquen — similar à Noche Nórdica mas com moto de neve (upgrade)." },
+      { time: "Tarde", desc: "Sugestão de experiência: Passeio de moto de neve no Cerro Otto ou Cerro Catedral.", tip: null },
+      { time: "Noite", desc: "Jantar de confraternização — escolha um bom restaurante para encerrar com chave de ouro. Sugestão: Kandahar.", tip: "Alternativa de experiência noturna: Refugio en Arelauquen." },
     ],
     costs: [
       { label: "Moto de neve (por dupla, ~30 min)", val: "~USD 60–80" },
@@ -440,6 +502,31 @@ function toggle(i) {
 
 // Abre o primeiro dia por padrão
 toggle(0);
+
+// Lógica para exportar em PDF
+document.getElementById('btn-export-pdf').addEventListener('click', () => {
+  // 1. Abrir todos os dias para que a informação completa saia no PDF
+  days.forEach((d, i) => {
+    document.getElementById('body-' + i).classList.add('open');
+    document.getElementById('chev-' + i).classList.add('open');
+    document.getElementById('chev-' + i).style.transform = 'rotate(90deg)';
+  });
+
+  // 2. Definir o elemento a ser capturado e as opções do PDF
+  const element = document.getElementById('content-to-pdf');
+  const opt = {
+    margin:       [10, 0, 10, 0], 
+    filename:     'Roteiro_Bariloche.pdf',
+    image:        { type: 'jpeg', quality: 0.98 },
+    html2canvas:  { scale: 2, useCORS: true, windowWidth: 800 },
+    jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+  };
+
+  // 3. Pequeno atraso para garantir que a animação de "abrir" termine
+  setTimeout(() => {
+    html2pdf().set(opt).from(element).save();
+  }, 400);
+});
 </script>
 </body>
 </html>
