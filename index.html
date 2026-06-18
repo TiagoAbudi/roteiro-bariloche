@@ -1,466 +1,960 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Roteiro Bariloche</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<!-- Biblioteca html2pdf -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roteiro Bariloche — André</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
-<style>
-  :root {
-    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-    --color-text-primary: #1e293b;
-    --color-text-secondary: #64748b;
-    --color-text-info: #0369a1;
-    --color-background-primary: #ffffff;
-    --color-background-secondary: #f8fafc;
-    --color-background-info: #f0f9ff;
-    --color-border-secondary: #cbd5e1;
-    --color-border-tertiary: #e2e8f0;
-    --border-radius-md: 10px;
-    --border-radius-lg: 16px;
-    --app-bg: #e2e8f0;
-  }
-
-  @media (prefers-color-scheme: dark) {
+  <style>
     :root {
-      --color-text-primary: #f8fafc;
-      --color-text-secondary: #94a3b8;
-      --color-text-info: #38bdf8;
-      --color-background-primary: #0f172a;
-      --color-background-secondary: #1e293b;
-      --color-background-info: #082f49;
-      --color-border-secondary: #334155;
-      --color-border-tertiary: #1e293b;
-      --app-bg: #020617;
+      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+      --color-text-primary: #1e293b;
+      --color-text-secondary: #64748b;
+      --color-text-info: #0369a1;
+      --color-background-primary: #ffffff;
+      --color-background-secondary: #f8fafc;
+      --color-background-info: #f0f9ff;
+      --color-border-secondary: #cbd5e1;
+      --color-border-tertiary: #e2e8f0;
+      --border-radius-md: 10px;
+      --border-radius-lg: 16px;
+      --app-bg: #e2e8f0;
     }
-  }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  
-  body { 
-    font-family: var(--font-sans); 
-    background-color: var(--app-bg);
-    color: var(--color-text-primary);
-    display: flex;
-    justify-content: center;
-    padding: 20px 10px;
-  }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --color-text-primary: #f8fafc;
+        --color-text-secondary: #94a3b8;
+        --color-text-info: #38bdf8;
+        --color-background-primary: #0f172a;
+        --color-background-secondary: #1e293b;
+        --color-background-info: #082f49;
+        --color-border-secondary: #334155;
+        --color-border-tertiary: #1e293b;
+        --app-bg: #020617;
+      }
+    }
 
-  .app-container {
-    max-width: 600px;
-    width: 100%;
-    background: var(--color-background-primary);
-    border-radius: 24px;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-    overflow: hidden;
-  }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-  .header { 
-    padding: 2rem 1.5rem 1.5rem; 
-    background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
-    border-bottom: 1px solid var(--color-border-tertiary); 
-    position: relative;
-  }
-  @media (prefers-color-scheme: dark) {
-    .header { background: linear-gradient(135deg, #0c4a6e 0%, #082f49 100%); }
-  }
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--app-bg);
+      color: var(--color-text-primary);
+      display: flex;
+      justify-content: center;
+      padding: 20px 10px;
+    }
 
-  .header-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-  }
+    .app-container {
+      max-width: 600px;
+      width: 100%;
+      background: var(--color-background-primary);
+      border-radius: 24px;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      overflow: hidden;
+    }
 
-  .header h1 { font-size: 22px; font-weight: 700; color: #0f172a; letter-spacing: -0.5px; }
-  @media (prefers-color-scheme: dark) { .header h1 { color: #f0f9ff; } }
-  
-  .header p { font-size: 14px; color: #475569; margin-top: 6px; font-weight: 500; }
-  @media (prefers-color-scheme: dark) { .header p { color: #94a3b8; } }
+    .header {
+      padding: 2rem 1.5rem 1.5rem;
+      background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+      border-bottom: 1px solid var(--color-border-tertiary);
+      position: relative;
+    }
 
-  /* Estilo do botão de PDF */
-  .btn-pdf {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    background-color: #0284c7;
-    color: #ffffff;
-    border: none;
-    padding: 8px 14px;
-    border-radius: 8px;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.2s, transform 0.1s;
-    font-family: var(--font-sans);
-  }
-  .btn-pdf:hover { background-color: #0369a1; }
-  .btn-pdf:active { transform: scale(0.96); }
-  .btn-pdf svg { width: 16px; height: 16px; fill: currentColor; }
+    @media (prefers-color-scheme: dark) {
+      .header {
+        background: linear-gradient(135deg, #0c4a6e 0%, #082f49 100%);
+      }
+    }
 
-  .legend { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 16px; }
-  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--color-text-secondary); }
-  .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
 
-  .days { padding: 1rem 1.5rem 1.5rem; }
-  
-  .day-card { 
-    border: 1px solid var(--color-border-tertiary); 
-    border-radius: var(--border-radius-lg); 
-    margin-top: 16px; 
-    overflow: hidden; 
-    background: var(--color-background-primary);
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  .day-card:hover {
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-  }
+    .header h1 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #0f172a;
+      letter-spacing: -0.5px;
+    }
 
-  .day-header { display: flex; align-items: center; gap: 12px; padding: 14px 16px; cursor: pointer; user-select: none; }
-  .day-header:hover { background: var(--color-background-secondary); }
-  
-  .day-num { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; flex-shrink: 0; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-  .day-title { flex: 1; }
-  .day-name { font-size: 15px; font-weight: 600; color: var(--color-text-primary); }
-  .day-date { font-size: 13px; color: var(--color-text-secondary); margin-top: 2px; }
-  
-  .day-badge { font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 20px; white-space: nowrap; text-transform: uppercase; letter-spacing: 0.5px;}
-  
-  .chevron { font-size: 20px; color: var(--color-text-secondary); transition: transform 0.3s ease; }
-  .chevron.open { transform: rotate(90deg); }
-  
-  .day-body { display: none; border-top: 1px solid var(--color-border-tertiary); padding: 20px 16px; background: var(--color-background-primary); }
-  .day-body.open { display: block; animation: fadeIn 0.3s ease-in-out; }
-  
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-5px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+    @media (prefers-color-scheme: dark) {
+      .header h1 {
+        color: #f0f9ff;
+      }
+    }
 
-  .timeline { position: relative; padding-left: 24px; }
-  .timeline::before { content: ''; position: absolute; left: 7px; top: 8px; bottom: 8px; width: 2px; background: var(--color-border-secondary); border-radius: 2px; }
-  .tl-item { position: relative; margin-bottom: 20px; }
-  .tl-item:last-child { margin-bottom: 0; }
-  .tl-dot { position: absolute; left: -22px; top: 6px; width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--color-border-secondary); background: var(--color-background-primary); z-index: 2; }
-  .tl-time { font-size: 12px; font-weight: 600; color: var(--color-text-info); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
-  .tl-desc { font-size: 14px; color: var(--color-text-primary); line-height: 1.6; }
-  .tl-tip { font-size: 13px; color: var(--color-text-secondary); margin-top: 6px; padding: 6px 10px; background: var(--color-background-secondary); border-radius: 6px; border-left: 3px solid #fcd34d; }
-  
-  .cost-box { margin-top: 24px; background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 16px; border: 1px solid var(--color-border-tertiary); }
-  .cost-title { font-size: 12px; font-weight: 700; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; }
-  .cost-row { display: flex; justify-content: space-between; font-size: 13px; color: var(--color-text-secondary); margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px dashed var(--color-border-tertiary); }
-  .cost-row:last-child { border-bottom: none; }
-  .cost-total { display: flex; justify-content: space-between; font-size: 15px; font-weight: 700; color: var(--color-text-primary); margin-top: 12px; padding-top: 12px; border-top: 2px solid var(--color-border-tertiary); }
-  
-  .tip-box { margin-top: 16px; background: var(--color-background-info); border-radius: var(--border-radius-md); padding: 12px 14px; font-size: 13px; color: var(--color-text-info); line-height: 1.6; border: 1px solid #bae6fd; }
-  .alt-box { margin-top: 12px; border: 1px dashed #94a3b8; border-radius: var(--border-radius-md); padding: 12px 14px; font-size: 13px; color: var(--color-text-secondary); line-height: 1.6; background: var(--color-background-secondary); }
-  .alt-box strong { color: var(--color-text-primary); font-weight: 600; }
-  
-  .section-title { font-size: 18px; font-weight: 700; color: var(--color-text-primary); margin-bottom: 16px; padding: 0 1.5rem; }
+    .header p {
+      font-size: 14px;
+      color: #475569;
+      margin-top: 6px;
+      font-weight: 500;
+    }
 
-  .transfer-section, .summary-section { padding: 0 1.5rem 2rem; }
-  
-  .transfer-card { border: 1px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 20px; background: var(--color-background-primary); }
-  .transfer-card h3 { font-size: 15px; font-weight: 600; color: var(--color-text-primary); margin-bottom: 16px; }
-  
-  .transfer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  @media (max-width: 480px) { .transfer-grid { grid-template-columns: 1fr; } }
-  
-  .tc { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 12px; border: 1px solid var(--color-border-tertiary); }
-  .tc-label { font-size: 12px; color: var(--color-text-secondary); margin-bottom: 4px; font-weight: 500; }
-  .tc-val { font-size: 15px; font-weight: 700; color: var(--color-text-primary); }
-  
-  .summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-  @media (max-width: 480px) { .summary-grid { grid-template-columns: 1fr; } }
-  
-  .sc { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 16px; border: 1px solid var(--color-border-tertiary); text-align: center; }
-  .sc-label { font-size: 12px; font-weight: 600; color: var(--color-text-secondary); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;}
-  .sc-val { font-size: 18px; font-weight: 700; color: #0284c7; }
-  .sc-sub { font-size: 12px; color: var(--color-text-secondary); margin-top: 6px; line-height: 1.3;}
+    @media (prefers-color-scheme: dark) {
+      .header p {
+        color: #94a3b8;
+      }
+    }
 
-  .cat-ski { background: #dbeafe; color: #1e3a8a; } .cat-ski-num { background: #3b82f6; color: #fff; }
-  .cat-tour { background: #d1fae5; color: #065f46; } .cat-tour-num { background: #10b981; color: #fff; }
-  .cat-free { background: #fef3c7; color: #92400e; } .cat-free-num { background: #f59e0b; color: #fff; }
-  .cat-exp { background: #ede9fe; color: #5b21b6; } .cat-exp-num { background: #8b5cf6; color: #fff; }
-  .cat-travel { background: #f1f5f9; color: #334155; } .cat-travel-num { background: #64748b; color: #fff; }
+    .header-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 14px;
+    }
 
-  @media (prefers-color-scheme: dark) {
-    .cat-ski { background: #1e3a8a; color: #bfdbfe; }
-    .cat-tour { background: #064e3b; color: #a7f3d0; }
-    .cat-free { background: #78350f; color: #fde68a; }
-    .cat-exp { background: #4c1d95; color: #ddd6fe; }
-    .cat-travel { background: #334155; color: #e2e8f0; }
-  }
-</style>
+    .header-meta-item {
+      font-size: 12px;
+      color: #475569;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .header-meta-item {
+        color: #94a3b8;
+      }
+    }
+
+    .btn-pdf {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background-color: #0284c7;
+      color: #ffffff;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.2s, transform 0.1s;
+      font-family: var(--font-sans);
+    }
+
+    .btn-pdf:hover {
+      background-color: #0369a1;
+    }
+
+    .btn-pdf:active {
+      transform: scale(0.96);
+    }
+
+    .btn-pdf svg {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--color-text-secondary);
+    }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .days {
+      padding: 1rem 1.5rem 1.5rem;
+    }
+
+    .day-card {
+      border: 1px solid var(--color-border-tertiary);
+      border-radius: var(--border-radius-lg);
+      margin-top: 16px;
+      overflow: hidden;
+      background: var(--color-background-primary);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .day-card:hover {
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+
+    .day-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .day-header:hover {
+      background: var(--color-background-secondary);
+    }
+
+    .day-num {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 700;
+      flex-shrink: 0;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .day-title {
+      flex: 1;
+    }
+
+    .day-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--color-text-primary);
+    }
+
+    .day-date {
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      margin-top: 2px;
+    }
+
+    .day-badge {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 20px;
+      white-space: nowrap;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .chevron {
+      font-size: 20px;
+      color: var(--color-text-secondary);
+      transition: transform 0.3s ease;
+    }
+
+    .chevron.open {
+      transform: rotate(90deg);
+    }
+
+    .day-body {
+      display: none;
+      border-top: 1px solid var(--color-border-tertiary);
+      padding: 20px 16px;
+      background: var(--color-background-primary);
+    }
+
+    .day-body.open {
+      display: block;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-5px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .timeline {
+      position: relative;
+      padding-left: 24px;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 7px;
+      top: 8px;
+      bottom: 8px;
+      width: 2px;
+      background: var(--color-border-secondary);
+      border-radius: 2px;
+    }
+
+    .tl-item {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .tl-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .tl-dot {
+      position: absolute;
+      left: -22px;
+      top: 6px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      border: 2px solid var(--color-border-secondary);
+      background: var(--color-background-primary);
+      z-index: 2;
+    }
+
+    .tl-time {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--color-text-info);
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .tl-desc {
+      font-size: 14px;
+      color: var(--color-text-primary);
+      line-height: 1.6;
+    }
+
+    .tl-tip {
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      margin-top: 6px;
+      padding: 6px 10px;
+      background: var(--color-background-secondary);
+      border-radius: 6px;
+      border-left: 3px solid #fcd34d;
+    }
+
+    .incl-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 6px;
+      margin-top: 14px;
+    }
+
+    .incl-item {
+      font-size: 13px;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      line-height: 1.5;
+    }
+
+    .incl-yes {
+      color: #059669;
+    }
+
+    .incl-no {
+      color: #dc2626;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .incl-yes {
+        color: #34d399;
+      }
+
+      .incl-no {
+        color: #f87171;
+      }
+    }
+
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 14px;
+      font-size: 13px;
+      color: var(--color-text-secondary);
+    }
+
+    .meta-row span {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .cost-box {
+      margin-top: 18px;
+      background: var(--color-background-secondary);
+      border-radius: var(--border-radius-md);
+      padding: 16px;
+      border: 1px solid var(--color-border-tertiary);
+    }
+
+    .cost-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--color-text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+    }
+
+    .cost-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      margin-bottom: 8px;
+      padding-bottom: 8px;
+      border-bottom: 1px dashed var(--color-border-tertiary);
+    }
+
+    .cost-row:last-child {
+      border-bottom: none;
+    }
+
+    .cost-row span:last-child {
+      font-weight: 600;
+      color: var(--color-text-primary);
+      white-space: nowrap;
+    }
+
+    .cost-total {
+      display: flex;
+      justify-content: space-between;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--color-text-primary);
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 2px solid var(--color-border-tertiary);
+    }
+
+    .tip-box {
+      margin-top: 16px;
+      background: var(--color-background-info);
+      border-radius: var(--border-radius-md);
+      padding: 12px 14px;
+      font-size: 13px;
+      color: var(--color-text-info);
+      line-height: 1.6;
+      border: 1px solid #bae6fd;
+    }
+
+    .alt-box {
+      margin-top: 12px;
+      border: 1px dashed #94a3b8;
+      border-radius: var(--border-radius-md);
+      padding: 12px 14px;
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+      background: var(--color-background-secondary);
+    }
+
+    .alt-box strong {
+      color: var(--color-text-primary);
+      font-weight: 600;
+    }
+
+    .alt-box a {
+      color: var(--color-text-info);
+      word-break: break-all;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--color-text-primary);
+      margin: 8px 0 16px;
+      padding: 0 1.5rem;
+    }
+
+    .transfer-section,
+    .summary-section {
+      padding: 0 1.5rem 2rem;
+    }
+
+    .transfer-card {
+      border: 1px solid var(--color-border-tertiary);
+      border-radius: var(--border-radius-lg);
+      padding: 20px;
+      background: var(--color-background-primary);
+    }
+
+    .transfer-card h3 {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      margin-bottom: 16px;
+    }
+
+    .transfer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    @media (max-width: 480px) {
+      .transfer-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .tc {
+      background: var(--color-background-secondary);
+      border-radius: var(--border-radius-md);
+      padding: 12px;
+      border: 1px solid var(--color-border-tertiary);
+    }
+
+    .tc-label {
+      font-size: 12px;
+      color: var(--color-text-secondary);
+      margin-bottom: 4px;
+      font-weight: 500;
+    }
+
+    .tc-val {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--color-text-primary);
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    @media (max-width: 480px) {
+      .summary-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .sc {
+      background: var(--color-background-secondary);
+      border-radius: var(--border-radius-md);
+      padding: 16px;
+      border: 1px solid var(--color-border-tertiary);
+      text-align: center;
+    }
+
+    .sc-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--color-text-secondary);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .sc-val {
+      font-size: 18px;
+      font-weight: 700;
+      color: #0284c7;
+    }
+
+    .sc-sub {
+      font-size: 12px;
+      color: var(--color-text-secondary);
+      margin-top: 6px;
+      line-height: 1.3;
+    }
+
+    .payment-card {
+      border: 1px solid var(--color-border-tertiary);
+      border-radius: var(--border-radius-lg);
+      padding: 18px;
+      background: var(--color-background-primary);
+      margin-top: 12px;
+    }
+
+    .payment-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px dashed var(--color-border-tertiary);
+    }
+
+    .payment-row:last-child {
+      border-bottom: none;
+    }
+
+    .payment-label {
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      font-weight: 500;
+    }
+
+    .payment-val {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--color-text-primary);
+    }
+
+    .payment-val.highlight {
+      color: #059669;
+    }
+
+    .footer-note {
+      padding: 0 1.5rem 2rem;
+      font-size: 11px;
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    .cat-ski {
+      background: #dbeafe;
+      color: #1e3a8a;
+    }
+
+    .cat-ski-num {
+      background: #3b82f6;
+      color: #fff;
+    }
+
+    .cat-tour {
+      background: #d1fae5;
+      color: #065f46;
+    }
+
+    .cat-tour-num {
+      background: #10b981;
+      color: #fff;
+    }
+
+    .cat-free {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .cat-free-num {
+      background: #f59e0b;
+      color: #fff;
+    }
+
+    .cat-exp {
+      background: #ede9fe;
+      color: #5b21b6;
+    }
+
+    .cat-exp-num {
+      background: #8b5cf6;
+      color: #fff;
+    }
+
+    .cat-travel {
+      background: #f1f5f9;
+      color: #334155;
+    }
+
+    .cat-travel-num {
+      background: #64748b;
+      color: #fff;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .cat-ski {
+        background: #1e3a8a;
+        color: #bfdbfe;
+      }
+
+      .cat-tour {
+        background: #064e3b;
+        color: #a7f3d0;
+      }
+
+      .cat-free {
+        background: #78350f;
+        color: #fde68a;
+      }
+
+      .cat-exp {
+        background: #4c1d95;
+        color: #ddd6fe;
+      }
+
+      .cat-travel {
+        background: #334155;
+        color: #e2e8f0;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<div class="app-container" id="content-to-pdf">
-  <div class="header">
-    <div class="header-top">
-      <div>
-        <h1>🏔️ Bariloche — Roteiro de inverno</h1>
-        <p>16 a 25 de julho · 7 pessoas</p>
+  <div class="app-container" id="content-to-pdf">
+    <div class="header">
+      <div class="header-top">
+        <div>
+          <h1>🏔️ Roteiro Bariloche</h1>
+          <p>7 passageiros adultos · Hospedagem: Airbnb</p>
+        </div>
       </div>
-      <!-- O atributo data-html2canvas-ignore="true" esconde o botão no PDF final -->
-      <!-- <button class="btn-pdf" id="btn-export-pdf" data-html2canvas-ignore="true">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
-        PDF
-      </button> -->
-    </div>
-    <div class="legend">
-      <div class="legend-item"><div class="legend-dot" style="background:#3b82f6"></div>Ski</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#10b981"></div>Tour</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#f59e0b"></div>Day free</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#8b5cf6"></div>Experiência</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#64748b"></div>Translado</div>
-    </div>
-  </div>
-
-  <div class="days" id="days-container"></div>
-
-  <!-- Nova Seção: Gastronomia e Alimentação -->
-  <h2 class="section-title">Gastronomia e Alimentação</h2>
-  <div class="transfer-section">
-    <div class="transfer-card">
-      <h3>🍽️ Estimativa de Gastos Diários (por pessoa)</h3>
-      <div class="transfer-grid">
-        <div class="tc"><div class="tc-label">Café / Lanches (Empanadas)</div><div class="tc-val">~R$ 40 a R$ 70</div></div>
-        <div class="tc"><div class="tc-label">Almoço (Catedral/Restaurantes)</div><div class="tc-val">~R$ 100 a R$ 180</div></div>
-        <div class="tc"><div class="tc-label">Jantar (Fondue, Parrilla, Vinho)</div><div class="tc-val">~R$ 150 a R$ 250+</div></div>
-        <div class="tc"><div class="tc-label">Média Diária Total</div><div class="tc-val" style="color: #0284c7;">~R$ 350</div></div>
+      <div class="header-meta">
+        <div class="header-meta-item">📅 Chegada: 16/07/2026</div>
+        <div class="header-meta-item">📅 Retorno: 25/07/2026</div>
       </div>
-      <div class="tip-box" style="margin-top:16px">💡 <strong>Dica de Ouro:</strong> Restaurantes famosos (como <em>El Boliche de Alberto</em> para carnes, <em>Familia Weiss</em> ou casas de fondue) costumam ter filas na alta temporada. Tente fazer reserva ou chegar cedo. E aproveite os supermercados: alfajores e bons vinhos argentinos são muito baratos!</div>
-    </div>
-  </div>
-
-  <h2 class="section-title">Logística e Transportes</h2>
-  <div class="transfer-section">
-    <div class="transfer-card">
-      <h3>🚐 Transfer — grupo de 7 pessoas (minivan privativa)</h3>
-      <div class="transfer-grid">
-        <div class="tc"><div class="tc-label">Aeroporto → Centro (ida)</div><div class="tc-val">~R$ 808</div></div>
-        <div class="tc"><div class="tc-label">Centro → Aeroporto (volta)</div><div class="tc-val">~R$ 808</div></div>
-        <div class="tc"><div class="tc-label">Centro → Cerro Catedral</div><div class="tc-val">~R$ 1.355</div></div>
-        <div class="tc"><div class="tc-label">Porto Pañuelo (Isla Victoria)</div><div class="tc-val">~R$ 112/pessoa</div></div>
+      <div class="legend">
+        <div class="legend-item">
+          <div class="legend-dot" style="background:#3b82f6"></div>Ski
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot" style="background:#10b981"></div>Tour
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot" style="background:#f59e0b"></div>Day free
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot" style="background:#8b5cf6"></div>Experiência
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot" style="background:#64748b"></div>Translado
+        </div>
       </div>
-      <div class="tip-box" style="margin-top:16px">💡 <strong>Dica:</strong> Para os dias de ski no Cerro Catedral, considere contratar transfer privativo direto do hotel. O Cerro Otto oferece ônibus gratuito saindo do centro (esquina Mitre com Villegas) das 10h às 16h.</div>
+    </div>
+
+    <div class="days" id="days-container"></div>
+
+    <h2 class="section-title">Resumo do roteiro fechado</h2>
+    <div class="summary-section">
+      <div class="cost-box" style="margin-top: 0;">
+        <div class="cost-title">Valor por passeio (já cotado)</div>
+        <div class="cost-row"><span>Circuito Chico + Cervejaria Patagônia</span><span>R$ 2.053,14</span></div>
+        <div class="cost-row"><span>Navegação Ilha Victoria e Bosque Arrayanes</span><span>R$ 4.123,91</span></div>
+        <div class="cost-row"><span>Excursão Cerro Tronador e Ventisquero Negro</span><span>R$ 2.367,68</span></div>
+        <div class="cost-row"><span>Aula de Ski ou Snowboard</span><span>R$ 5.020,58</span></div>
+        <div class="cost-row"><span>Caminho dos 7 Lagos até San Martín de los Andes</span><span>R$ 2.638,09</span></div>
+        <div class="cost-total"><span>Total geral</span><span style="color:#0284c7">R$ 16.203,40</span></div>
+      </div>
+    </div>
+
+    <h2 class="section-title">Condições de pagamento</h2>
+    <div class="summary-section">
+      <div class="payment-card">
+        <div class="payment-row">
+          <span class="payment-label">No cartão, 4x sem juros</span>
+          <span class="payment-val">4x de R$ 4.050,85</span>
+        </div>
+        <div class="payment-row">
+          <span class="payment-label">Desconto de 5% via PIX</span>
+          <span class="payment-val highlight">R$ 15.393,23</span>
+        </div>
+      </div>
+      <div class="tip-box" style="margin-top:14px">💡 É possível dividir o pagamento em mais de um cartão. Os valores
+        acima já são o total do grupo de 7 pessoas para os passeios fechados — confira o detalhamento de cada dia acima
+        para o que está incluso e o que precisa ser pago à parte (ingressos de parque nacional, taxas de embarque, passe
+        de ski no cerro, etc).</div>
+    </div>
+
+    <div class="footer-note">
+      Valores e condições sujeitos a confirmação e disponibilidade no momento da reserva. Ingressos de parques
+      nacionais, teleféricos e taxas portuárias mencionados como "não incluso" devem ser pagos separadamente, geralmente
+      em pesos argentinos e em efetivo.
     </div>
   </div>
 
-  <!-- Resumo Financeiro Melhorado -->
-  <h2 class="section-title">Resumo Financeiro Consolidado</h2>
-  <div class="summary-section">
-    
-    <!-- Quadro Detalhado -->
-    <div class="cost-box" style="margin-top: 0; background: var(--color-background-primary); margin-bottom: 16px;">
-       <div class="cost-title">Previsão de Gastos no Destino (10 dias)</div>
-       <div class="cost-row"><span>🎟️ Passeios, Ski Pass e Experiências</span><span>~R$ 2.600</span></div>
-       <div class="cost-row"><span>⛷️ Aluguel de Roupas e Equipamentos</span><span>~R$ 600</span></div>
-       <div class="cost-row"><span>🚐 Transfers (divisão grupo) e Locomoção</span><span>~R$ 500</span></div>
-       <div class="cost-row"><span>🍽️ Alimentação (~R$ 350 diários x 10 dias)</span><span>~R$ 3.500</span></div>
-       <div class="cost-total"><span>Total Estimado (por pessoa)</span><span style="color: #0284c7;">~R$ 7.200</span></div>
-       <div class="sc-sub" style="text-align: right; margin-top: 4px;">*Não inclui passagens aéreas e hospedagem.</div>
+  <script>
+    const days = [
+      {
+        num: 1, date: "16/07 · Quinta", cat: "travel", catLabel: "Chegada",
+        title: "Chegada a Bariloche",
+        items: [
+          { time: "Manhã/Tarde", desc: "Desembarque no Aeroporto Teniente Luis Candelaria (BRC). Transfer para o Airbnb.", tip: "O aeroporto fica a ~13,5 km do centro, trajeto de 20–30 min." },
+          { time: "Tarde", desc: "Check-in no Airbnb. Acomodação e tempo livre para explorar o calçadão central (Rua Mitre).", tip: null },
+          { time: "Noite", desc: "Jantar de boas-vindas no centro de Bariloche.", tip: null },
+        ],
+        costs: [],
+        total: null,
+        tip: "Dia reservado para chegada e ambientação — os passeios fechados começam no dia 20/07.",
+        alt: null
+      },
+      {
+        num: 2, date: "17 a 19/07", cat: "free", catLabel: "Day free",
+        title: "Dias livres · Compras · Aluguel de roupas",
+        items: [
+          { time: "Qualquer dia", desc: "Aluguel de roupa de neve: calça, jaqueta impermeável, luvas e botas. Diversas lojas no centro.", tip: "Leve na mala: gorro, cachecol, segunda pele térmica e meias térmicas." },
+          { time: "Qualquer dia", desc: "Compras de chocolates artesanais na Rua Mitre (Mamuschka, Del Turista, Rapa Nui).", tip: null },
+          { time: "Qualquer dia", desc: "Tempo livre para explorar o Museu da Patagônia, a Catedral de Bariloche e o centro cívico.", tip: null },
+        ],
+        costs: [],
+        total: null,
+        tip: "Esses três dias ficam livres entre a chegada e o início dos passeios fechados — bom momento para qualquer experiência extra que o grupo queira incluir (Noche Nórdica, Cerro Otto, cervejarias por conta própria, etc).",
+        alt: null
+      },
+      {
+        num: 3, date: "20/07 · Segunda", cat: "tour", catLabel: "Tour",
+        title: "Circuito Chico + Cervejaria Patagônia",
+        items: [
+          { time: "14h30", desc: "Saída do tour pelo Circuito Chico, passando pelos principais pontos turísticos ao redor do Lago Nahuel Huapi, com parada na Cervejaria Patagônia.", tip: null },
+          { time: "Duração", desc: "4 horas de passeio.", tip: null },
+        ],
+        incl: [
+          { yes: true, text: "Traslado in/out (região central)" },
+          { yes: false, text: "Guia de turismo" },
+          { yes: false, text: "Ingresso Teleférico Campanário" },
+        ],
+        costs: [
+          { label: "Tour até 8 pessoas (sem guia)", val: "R$ 1.383,96" },
+          { label: "Adicional — transporte de volta da cervejaria", val: "R$ 669,18" },
+        ],
+        total: "R$ 2.053,14",
+        tip: "O ingresso do teleférico Campanário não está incluso — é pago no momento da subida, em efetivo (~AR$ 22 mil pesos).",
+        alt: null
+      },
+      {
+        num: 4, date: "21/07 · Terça", cat: "tour", catLabel: "Tour",
+        title: "Navegação Ilha Victoria e Bosque de Arrayanes",
+        items: [
+          { time: "12h30", desc: "Saída para a navegação no Lago Nahuel Huapi com destino à Ilha Victoria e ao Bosque de Arrayanes — único do mundo onde o arrayán cresce em forma de árvore.", tip: null },
+          { time: "Duração", desc: "5 horas de passeio, com trilha inclusa.", tip: null },
+        ],
+        incl: [
+          { yes: true, text: "Traslado in/out (ponto de encontro)" },
+          { yes: true, text: "Guia de turismo" },
+          { yes: true, text: "Navegação" },
+          { yes: true, text: "Trilha" },
+          { yes: false, text: "Ingresso para o parque nacional e taxa de embarque" },
+        ],
+        costs: [
+          { label: "Plano família +4 (por adulto)", val: "R$ 589,13" },
+        ],
+        total: "R$ 4.123,91",
+        tip: "Até 3 anos não paga. De 3 a 12 anos pagamento parcial. 12 anos ou mais, pagamento integral.",
+        alt: "<strong>Pago separadamente, no check-in do porto:</strong> Ingresso do parque nacional — AR$ 35.000 (estrangeiros) · Taxa de embarque — AR$ 5.400. O ingresso do parque pode ser comprado com antecedência em <a href='https://www.argentina.gob.ar/interior/ambiente/parquesnacionales/nahuelhuapi/tickets' target='_blank'>argentina.gob.ar/.../nahuelhuapi/tickets</a>."
+      },
+      {
+        num: 5, date: "22/07 · Quarta", cat: "tour", catLabel: "Tour",
+        title: "Excursão Cerro Tronador e Ventisquero Negro",
+        items: [
+          { time: "9h", desc: "Saída para o Cerro Tronador, vulcão extinto, com visita ao Ventisquero Negro (geleira).", tip: null },
+          { time: "Duração", desc: "9 horas de passeio, full-day.", tip: null },
+        ],
+        incl: [
+          { yes: true, text: "Traslado in/out (região central)" },
+          { yes: true, text: "Guia de turismo" },
+          { yes: false, text: "Alimentação" },
+          { yes: false, text: "Ingresso do parque nacional" },
+        ],
+        costs: [
+          { label: "Por pessoa", val: "R$ 338,24" },
+        ],
+        total: "R$ 2.367,68",
+        tip: "Leve dinheiro para alimentação durante o passeio e para o ingresso do parque nacional, não incluso no valor.",
+        alt: null
+      },
+      {
+        num: 6, date: "23/07 · Quinta", cat: "ski", catLabel: "Ski",
+        title: "Aula de Ski ou Snowboard",
+        items: [
+          { time: "8h30", desc: "Saída para o cerro com aula de 2 horas de ski ou snowboard, em grupo ou modalidade privada.", tip: null },
+          { time: "Duração", desc: "8 horas no total (incluindo traslado e tempo livre na montanha).", tip: null },
+        ],
+        incl: [
+          { yes: true, text: "Traslado in/out (ponto de encontro)" },
+          { yes: true, text: "Aula de 2h" },
+          { yes: true, text: "Equipamento (botas + esquis + bastões ou prancha de snowboard)" },
+          { yes: false, text: "Passe de meios de elevação (adquirido no cerro)" },
+          { yes: false, text: "Roupas para neve" },
+          { yes: false, text: "Óculos e luvas" },
+        ],
+        costs: [
+          { label: "Aula em grupo (por pessoa que fará ski)", val: "R$ 699,00" },
+          { label: "Privado para 6 pessoas (grupo)", val: "R$ 4.321,58" },
+        ],
+        total: "R$ 5.020,58",
+        tip: "Disponível durante toda a temporada de inverno (julho, agosto e setembro). Confirme com o grupo quem fará aula individual e quem entra no privado de 6 pessoas.",
+        alt: null
+      },
+      {
+        num: 7, date: "24/07 · Sexta", cat: "exp", catLabel: "Experiência",
+        title: "Caminho dos 7 Lagos — San Martín de los Andes",
+        items: [
+          { time: "8h", desc: "Saída para uma das rotas mais famosas da Patagônia, com paradas sucessivas para apreciar montanhas, riachos, lagos e florestas nativas até San Martín de los Andes.", tip: null },
+          { time: "19h30", desc: "Retorno previsto a Bariloche.", tip: null },
+          { time: "Duração", desc: "11 horas de passeio.", tip: null },
+        ],
+        incl: [
+          { yes: true, text: "Traslado in/out (região central)" },
+          { yes: true, text: "Guia de turismo" },
+          { yes: false, text: "Alimentação" },
+        ],
+        costs: [
+          { label: "Por pessoa", val: "R$ 376,87" },
+        ],
+        total: "R$ 2.638,09",
+        tip: "Até 3 anos não paga, 3 anos ou mais paga integral. Leve dinheiro para alimentação ao longo do trajeto.",
+        alt: "Mais informações: <a href='https://guiareceptivo.com/destinos/argentina/bariloche/caminho-dos-sete-lagos-ate-san-martin-de-los-andes' target='_blank'>guiareceptivo.com/.../caminho-dos-sete-lagos</a>"
+      },
+      {
+        num: 8, date: "25/07 · Sábado", cat: "travel", catLabel: "Volta",
+        title: "Últimas compras e Retorno",
+        items: [
+          { time: "Manhã", desc: "Check-out do Airbnb. Últimas compras de chocolates, licores e artesanatos.", tip: "Pague em pesos argentinos em dinheiro para melhores preços." },
+          { time: "Conforme voo", desc: "Transfer para o Aeroporto BRC.", tip: "Chegue ao aeroporto com 2h de antecedência." },
+        ],
+        costs: [],
+        total: null,
+        tip: "Devolva as roupas alugadas antes de partir. Guarde nota fiscal de todas as compras.",
+        alt: null
+      }
+    ];
+
+    const catClasses = {
+      ski: { badge: "cat-ski", num: "cat-ski-num" },
+      tour: { badge: "cat-tour", num: "cat-tour-num" },
+      free: { badge: "cat-free", num: "cat-free-num" },
+      exp: { badge: "cat-exp", num: "cat-exp-num" },
+      travel: { badge: "cat-travel", num: "cat-travel-num" },
+    };
+
+    const container = document.getElementById('days-container');
+
+    days.forEach((d, i) => {
+      const cc = catClasses[d.cat];
+      const card = document.createElement('div');
+      card.className = 'day-card';
+
+      const inclHtml = d.incl ? `
+    <div class="incl-grid">
+      ${d.incl.map(it => `
+        <div class="incl-item">
+          <span class="${it.yes ? 'incl-yes' : 'incl-no'}">${it.yes ? '✔️' : '❌'}</span>
+          <span>${it.text}</span>
+        </div>
+      `).join('')}
     </div>
+  ` : '';
 
-    <!-- Dicas de Câmbio -->
-    <div class="summary-grid">
-      <div class="sc"><div class="sc-label">Câmbio em Espécie</div><div class="sc-val">Western Union</div><div class="sc-sub">Envie dinheiro pelo app e retire em pesos lá. Cotação "Blue".</div></div>
-      <div class="sc"><div class="sc-label">Cartão de Débito</div><div class="sc-val">Nomad / Wise</div><div class="sc-sub">Ótimo para compras do dia a dia (cotação Dólar MEP).</div></div>
-      <div class="sc"><div class="sc-label">Levar do Brasil</div><div class="sc-val">Dólares Novos</div><div class="sc-sub">Notas com "cara grande" têm cotação melhor nas casas de câmbio.</div></div>
+      const costHtml = d.costs && d.costs.length ? `
+    <div class="cost-box">
+      <div class="cost-title">Valores</div>
+      ${d.costs.map(c => `<div class="cost-row"><span>${c.label}</span><span>${c.val}</span></div>`).join('')}
+      ${d.total ? `<div class="cost-total"><span>Total do passeio</span><span>${d.total}</span></div>` : ''}
     </div>
-  </div>
-</div>
+  ` : '';
 
-<script>
-const days = [
-  {
-    num: 1, date: "16/07 · Quinta", cat: "travel", catLabel: "Chegada",
-    title: "Chegada a Bariloche",
-    items: [
-      { time: "Manhã/Tarde", desc: "Desembarque no Aeroporto Teniente Luis Candelaria (BRC). Transfer privativo minivan para o hotel no centro.", tip: "O aeroporto fica a ~13,5 km do centro, trajeto de 20–30 min." },
-      { time: "Tarde", desc: "Check-in no hotel. Descanse e se acomode. Explore o calçadão central (Rua Mitre) a pé.", tip: null },
-      { time: "Tarde/Noite", desc: "Visite as agências de receptivo para fechar os passeios dos próximos dias. As agências funcionam até as 21h.", tip: "Pergunte desconto para pagamento em dinheiro e para fechar vários passeios juntos." },
-      { time: "Noite", desc: "Jantar de boas-vindas no centro. Experimente a Cervecería Blest ou restaurantes da Av. Bustillo.", tip: null },
-    ],
-    costs: [
-      { label: "Transfer aeroporto → centro (grupo)", val: "~R$ 808" },
-    ],
-    total: "~R$ 808 (grupo)",
-    tip: "Reserve os passeios dos dias 3, 4, 6 e a Noche Nórdica logo na chegada — vagas limitadas no inverno.",
-    alt: null
-  },
-  {
-    num: 2, date: "17/07 · Sexta", cat: "free", catLabel: "Day free",
-    title: "Compras e Aluguel de Roupas",
-    items: [
-      { time: "Manhã", desc: "Aluguel de roupa de neve: conjunto de calça, jaqueta impermeável, luvas e botas (para os dias de ski). Diversas lojas no centro.", tip: "Você já deve trazer na mala: gorro, cachecol, segunda pele térmica e meias térmicas." },
-      { time: "Manhã", desc: "Compras de chocolates artesanais na Rua Mitre. Lojas imperdíveis: Mamuschka, Del Turista, Rapa Nui.", tip: null },
-      { time: "Tarde", desc: "Explore o Museu da Patagônia no Centro Cívico (entrada gratuita) e a Catedral de Bariloche.", tip: null },
-      { time: "Tarde/Noite", desc: "Experiência opcional: Noche Nórdica no Cerro Otto — passeio noturno de moto de neve + jantar gourmet em refúgio de montanha.", tip: "Saída ~21h, retorno ~00h. Reserve com antecedência! Capacidade limitada. Preço: ~R$ 800–1.100 por pessoa." },
-    ],
-    costs: [
-      { label: "Aluguel de roupa neve (por pessoa/dia)", val: "~USD 15–25" },
-      { label: "Noche Nórdica (por pessoa, opcional)", val: "~R$ 800–1.100" },
-    ],
-    total: "Variável",
-    tip: "A Noche Nórdica é um dos passeios mais especiais de Bariloche no inverno. Recomendado pelo caráter único e exclusividade.",
-    alt: null
-  },
-  {
-    num: 3, date: "18/07 · Sábado", cat: "ski", catLabel: "Ski",
-    title: "Ski — Cerro Catedral",
-    items: [
-      { time: "Cedo (8h)", desc: "Café da manhã e saída para o Cerro Catedral (a 19 km do centro). Transfer privativo recomendado para o grupo.", tip: "Chegue cedo para pegar boas pistas e evitar filas nos elevadores." },
-      { time: "9h–16h", desc: "Ski e snowboard livre. O Cerro Catedral é o maior complexo de ski do hemisfério sul.", tip: null },
-      { time: "Qualquer hora", desc: "Para quem não vai esquiar: Cable Carril para um refúgio com vista panorâmica incrível.", tip: "Tome um chocolate quente com vista para as pistas — experiência imperdível!" },
-      { time: "16h–17h", desc: "Retorno ao hotel. Tempo livre para recuperação.", tip: null },
-    ],
-    costs: [
-      { label: "Day pass ski (por pessoa, estrangeiro)", val: "~USD 100" },
-      { label: "Aluguel ski/snowboard completo (por pessoa)", val: "~USD 40" },
-      { label: "Transfer ida+volta Cerro Catedral (grupo)", val: "~R$ 2.710" },
-      { label: "Aula de ski iniciante (por pessoa)", val: "~USD 35–50" },
-    ],
-    total: "~USD 140–190 p/ pessoa + R$ 2.710 transfer",
-    tip: "Não sabe esquiar? Faça ao menos uma aula — os instrutores falam português!",
-    alt: null
-  },
-  {
-    num: 4, date: "19/07 · Domingo", cat: "ski", catLabel: "Ski",
-    title: "Ski — Cerro Catedral (2º dia)",
-    items: [
-      { time: "Cedo (8h)", desc: "Repita o roteiro do dia 3 com mais confiança nas pistas. Quem pegou aula no dia anterior já pode tentar pistas mais desafiadoras.", tip: null },
-      { time: "9h–16h", desc: "Ski e snowboard. Explore setores diferentes do dia anterior.", tip: "Domingo pode ser mais movimentado — chegue ainda mais cedo." },
-      { time: "Almoço", desc: "Almoce no complexo do Cerro Catedral — há várias opções de preços e estilos.", tip: null },
-    ],
-    costs: [
-      { label: "Day pass ski (por pessoa)", val: "~USD 100" },
-      { label: "Aluguel ski/snowboard (por pessoa)", val: "~USD 40" },
-      { label: "Transfer ida+volta (grupo)", val: "~R$ 2.710" },
-    ],
-    total: "~USD 140 p/ pessoa + R$ 2.710 transfer",
-    tip: "Alternativa: se o grupo já está satisfeito com ski, troque este 2º dia pelo Tour Cerro Tronador.",
-    alt: "<strong>Sugestão para quem não vai esquiar:</strong> Tour Cerro Tronador — viagem full-day até o vulcão extinto com geleira Ventisquero Negro."
-  },
-  {
-    num: 5, date: "20/07 · Segunda", cat: "tour", catLabel: "Tour",
-    title: "Tour Circuito Chico",
-    items: [
-      { time: "9h–13h", desc: "Saída em van para o Circuito Chico (65 km, ~4 horas). Percurso pela Av. Bustillo margeando o Lago Nahuel Huapi.", tip: null },
-      { time: "Cerro Campanario", desc: "Subida de aerosilla (opcional) ao cume a 1.050m — considerada uma das 10 vistas mais belas do mundo.", tip: "Ingresso da aerosilla não incluso no tour (~USD 15/pessoa). Vale muito!" },
-      { time: "Tarde", desc: "Continuação do circuito: Hotel Llao Llao, Capela San Eduardo, Porto Pañuelo, Villa Tacul e Lago Escondido.", tip: null },
-      { time: "13h–14h", desc: "Retorno ao centro. Tarde livre para compras ou descanso.", tip: null },
-      { time: "Tarde/Noite", desc: "Aproveite para almoçar ou jantar na Cervecería Patagonia.", tip: "A Patagonia oferece tour da fábrica de ~1h30 com 4 degustações." },
-    ],
-    costs: [
-      { label: "Tour Circuito Chico (por pessoa)", val: "~R$ 120–200" },
-      { label: "Aerosilla Cerro Campanario (opcional, por pessoa)", val: "~USD 15" },
-    ],
-    total: "~R$ 200–300 por pessoa",
-    tip: "As agências têm saída às 9h e às 15h. Prefira a saída da manhã para ter mais tempo.",
-    alt: null
-  },
-  {
-    num: 6, date: "21/07 · Terça", cat: "tour", catLabel: "Tour",
-    title: "Isla Victoria + Bosque de Arrayanes",
-    items: [
-      { time: "9h–9h30", desc: "Transfer do hotel até Porto Pañuelo (no Llao Llao, ~30 min). Embarque no catamarã.", tip: "Leve dinheiro em pesos argentinos para pagar taxa portuária (~USD 2) e ingresso do Parque Nacional Nahuel Huapi (~USD 6)." },
-      { time: "10h–11h", desc: "Navegação pelo Lago Nahuel Huapi até a Ilha Victoria. Trilhas na ilha passando por floresta nativa.", tip: null },
-      { time: "11h–13h", desc: "Navegação até a Península Quetrihué: Bosque de Arrayanes.", tip: "A floresta inspirou Walt Disney na criação do Bambi!" },
-      { time: "13h–14h30", desc: "Retorno de barco a Porto Pañuelo. Transfer de volta ao hotel.", tip: null },
-    ],
-    costs: [
-      { label: "Passeio de barco Isla Victoria (por pessoa)", val: "~R$ 250–350" },
-      { label: "Taxa portuária e Ingresso (por pessoa)", val: "~USD 8" },
-      { label: "Transfer hotel → Porto Pañuelo (grupo)", val: "~R$ 784" },
-    ],
-    total: "~R$ 450–550 por pessoa",
-    tip: "Recomendado: faça o passeio de manhã para ter melhor luz e mais tempo na ilha.",
-    alt: "<strong>Alternativa:</strong> Este passeio é altamente recomendado — mantenha! Se quiser trocar, substitua por Puerto Blest."
-  },
-  {
-    num: 7, date: "22/07 · Quarta", cat: "free", catLabel: "Free + Cerveja",
-    title: "Tour de cervejarias + Day Free",
-    items: [
-      { time: "Manhã", desc: "Manhã livre — ideal para trilha leve, SPA no hotel ou mais compras no centro.", tip: null },
-      { time: "15h–21h30", desc: "Beer Tour Bariloche: tour guiado por 3 cervejarias artesanais com degustações, harmonizações e jantar.", tip: "Paradas típicas: Wesley Brewery, Cervecería Patagonia, Fábrica Gilbert." },
-      { time: "Noite", desc: "Retorno ao hotel após o jantar na última cervejaria (~21h30).", tip: null },
-    ],
-    costs: [
-      { label: "Beer Tour (por pessoa, com jantar)", val: "~R$ 350–500" },
-    ],
-    total: "~R$ 350–500 por pessoa",
-    tip: "Cervejarias para visitar por conta: Blest (pioneira), Manush (centro), Patagonia (vista incrível).",
-    alt: "<strong>Variação:</strong> Se o grupo preferir um dia totalmente livre, reserve as cervejarias para uma saída noturna espontânea."
-  },
-  {
-    num: 8, date: "23/07 · Quinta", cat: "tour", catLabel: "Tour",
-    title: "Tour Cerro Otto",
-    items: [
-      { time: "10h", desc: "Ônibus gratuito do Cerro Otto saindo da esquina de Mitre com Villegas, no centro.", tip: "Funciona de seg a sáb, das 10h às 16h. No domingo, verifique operação." },
-      { time: "10h30", desc: "Compra de ingresso na base e subida de teleférico até o cume a 1.405m.", tip: "Chegue cedo para evitar fila." },
-      { time: "11h–14h", desc: "No cume: pistas de trenó, caminhada com raquetes de neve e a famosa Confeitaria Giratória.", tip: "A confeitaria gira 360° em ~20 min. Experimente o chocolate quente!" },
-      { time: "14h–15h", desc: "Descida de teleférico e ônibus de retorno ao centro.", tip: null },
-    ],
-    costs: [
-      { label: "Ingresso teleférico Cerro Otto (por pessoa)", val: "~USD 25–40" },
-      { label: "Atividades no cume (por pessoa, opcional)", val: "~USD 10–20" },
-    ],
-    total: "~USD 35–60 por pessoa",
-    tip: "Consulte o site oficial do Cerro Otto antes de ir — em dias de vento forte, o teleférico pode não operar.",
-    alt: null
-  },
-  {
-    num: 9, date: "24/07 · Sexta", cat: "exp", catLabel: "Experiência",
-    title: "Day Free + Experiência Especial",
-    items: [
-      { time: "Manhã", desc: "Manhã totalmente livre — aproveite para relaxar, fazer trilha leve, ou revisitar pontos que mais gostaram.", tip: null },
-      { time: "Tarde", desc: "Sugestão de experiência: Passeio de moto de neve no Cerro Otto ou Cerro Catedral.", tip: null },
-      { time: "Noite", desc: "Jantar de confraternização — escolha um bom restaurante para encerrar com chave de ouro. Sugestão: Kandahar.", tip: "Alternativa de experiência noturna: Refugio en Arelauquen." },
-    ],
-    costs: [
-      { label: "Moto de neve (por dupla, ~30 min)", val: "~USD 60–80" },
-      { label: "Jantar especial (por pessoa)", val: "~USD 30–50" },
-    ],
-    total: "~USD 70–120 por pessoa",
-    tip: "Outras experiências possíveis: dog sledding, tirolesa, 4x4 na neve. Consulte na agência.",
-    alt: "<strong>Alternativa:</strong> Rota dos 7 Lagos full-day saindo de Bariloche até San Martín de los Andes (~R$ 200/pessoa) — paisagens épicas."
-  },
-  {
-    num: 10, date: "25/07 · Sábado", cat: "travel", catLabel: "Volta",
-    title: "Últimas compras e Retorno",
-    items: [
-      { time: "Manhã", desc: "Check-out do hotel. Deixe as malas guardadas na recepção.", tip: null },
-      { time: "Manhã", desc: "Últimas compras de chocolates, licores e artesanatos para levar para casa.", tip: "Pague em pesos argentinos em dinheiro para melhores preços." },
-      { time: "Conforme voo", desc: "Transfer privativo do hotel para o Aeroporto BRC (minivan grupo).", tip: "Chegue ao aeroporto com 2h de antecedência." },
-    ],
-    costs: [
-      { label: "Transfer hotel → aeroporto (grupo)", val: "~R$ 808" },
-    ],
-    total: "~R$ 808 (grupo)",
-    tip: "Devolva as roupas alugadas antes de partir! Guarde nota fiscal de todas as compras.",
-    alt: null
-  }
-];
-
-const catClasses = {
-  ski: { badge: "cat-ski", num: "cat-ski-num" },
-  tour: { badge: "cat-tour", num: "cat-tour-num" },
-  free: { badge: "cat-free", num: "cat-free-num" },
-  exp: { badge: "cat-exp", num: "cat-exp-num" },
-  travel: { badge: "cat-travel", num: "cat-travel-num" },
-};
-
-const container = document.getElementById('days-container');
-
-days.forEach((d, i) => {
-  const cc = catClasses[d.cat];
-  const card = document.createElement('div');
-  card.className = 'day-card';
-  card.innerHTML = `
+      card.innerHTML = `
     <div class="day-header" onclick="toggle(${i})">
       <div class="day-num ${cc.num}">${d.num}</div>
       <div class="day-title">
@@ -481,52 +975,25 @@ days.forEach((d, i) => {
           </div>
         `).join('')}
       </div>
-      <div class="cost-box">
-        <div class="cost-title">Custos estimados</div>
-        ${d.costs.map(c => `<div class="cost-row"><span>${c.label}</span><span>${c.val}</span></div>`).join('')}
-        <div class="cost-total"><span>Total do dia</span><span>${d.total}</span></div>
-      </div>
+      ${inclHtml}
+      ${costHtml}
       ${d.tip ? `<div class="tip-box">✅ ${d.tip}</div>` : ''}
-      ${d.alt ? `<div class="alt-box">🔄 ${d.alt}</div>` : ''}
+      ${d.alt ? `<div class="alt-box">⚠️ ${d.alt}</div>` : ''}
     </div>
   `;
-  container.appendChild(card);
-});
+      container.appendChild(card);
+    });
 
-function toggle(i) {
-  const body = document.getElementById('body-' + i);
-  const chev = document.getElementById('chev-' + i);
-  const open = body.classList.toggle('open');
-  chev.classList.toggle('open', open);
-}
+    function toggle(i) {
+      const body = document.getElementById('body-' + i);
+      const chev = document.getElementById('chev-' + i);
+      const open = body.classList.toggle('open');
+      chev.classList.toggle('open', open);
+    }
 
-// Abre o primeiro dia por padrão
-toggle(0);
+    toggle(0);
 
-// Lógica para exportar em PDF
-document.getElementById('btn-export-pdf').addEventListener('click', () => {
-  // 1. Abrir todos os dias para que a informação completa saia no PDF
-  days.forEach((d, i) => {
-    document.getElementById('body-' + i).classList.add('open');
-    document.getElementById('chev-' + i).classList.add('open');
-    document.getElementById('chev-' + i).style.transform = 'rotate(90deg)';
-  });
-
-  // 2. Definir o elemento a ser capturado e as opções do PDF
-  const element = document.getElementById('content-to-pdf');
-  const opt = {
-    margin:       [10, 0, 10, 0], 
-    filename:     'Roteiro_Bariloche.pdf',
-    image:        { type: 'jpeg', quality: 0.98 },
-    html2canvas:  { scale: 2, useCORS: true, windowWidth: 800 },
-    jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
-  };
-
-  // 3. Pequeno atraso para garantir que a animação de "abrir" termine
-  setTimeout(() => {
-    html2pdf().set(opt).from(element).save();
-  }, 400);
-});
-</script>
+  </script>
 </body>
+
 </html>
